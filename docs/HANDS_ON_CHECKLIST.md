@@ -2,6 +2,14 @@
 
 Use this as the implementation path. Do not add this project to `porto-alan` until the evidence is real.
 
+## Runtime date rule
+
+Use `run_date` as a runtime parameter:
+
+- Manual run: pass `--run-date YYYY-MM-DD`.
+- Airflow run: use `{{ ds }}` from the DAG execution date.
+- `.env`: keep environment config such as bucket, prefix, and credentials. Do not rely on `.env` as the main source of `run_date` for scheduled pipelines.
+
 ## 1. Generate source data
 
 - Run the generator script.

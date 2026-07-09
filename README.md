@@ -60,13 +60,26 @@ pip install -r requirements.txt
 Copy-Item .env.example .env
 ```
 
-3. Generate local synthetic data.
+3. Choose a runtime date.
+
+`run_date` is a pipeline parameter, not a fixed environment setting. For manual runs, pass it through the CLI. In Airflow, use the DAG execution date with `{{ ds }}`.
+
+4. Generate local synthetic data.
 
 ```powershell
 python src\retail_orders\generate_synthetic_data.py --run-date 2026-07-10
 ```
 
-4. Follow the implementation checklist in [docs/HANDS_ON_CHECKLIST.md](docs/HANDS_ON_CHECKLIST.md).
+5. Upload raw files to S3.
+
+```powershell
+python src\retail_orders\upload_to_s3.py `
+  --local-dir data\raw\run_date=2026-07-10 `
+  --bucket your-s3-bucket-name `
+  --prefix retail_orders/run_date=2026-07-10
+```
+
+6. Follow the implementation checklist in [docs/HANDS_ON_CHECKLIST.md](docs/HANDS_ON_CHECKLIST.md).
 
 ## Portfolio Evidence To Capture
 

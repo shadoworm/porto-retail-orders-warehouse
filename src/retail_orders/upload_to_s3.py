@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import argparse
+import os
 from pathlib import Path
 
 import boto3
@@ -17,9 +18,12 @@ def upload_directory(local_dir: Path, bucket: str, prefix: str) -> None:
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--local-dir", required=True)
-    parser.add_argument("--bucket", required=True)
-    parser.add_argument("--prefix", required=True)
+    parser.add_argument("--bucket", default=os.getenv("S3_BUCKET"))
+    parser.add_argument("--prefix", default=os.getenv("S3_PREFIX", "retail_orders"))
     args = parser.parse_args()
+
+    if not args.bucket:
+        raise SystemExit("Missing S3 bucket. Pass --bucket or set S3_BUCKET.")
 
     upload_directory(Path(args.local_dir), args.bucket, args.prefix)
 

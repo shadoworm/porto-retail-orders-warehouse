@@ -1,0 +1,13 @@
+version: 2
+
+sources:
+  - name: bronze
+    database: RETAIL_ORDERS_WH
+    schema: BRONZE
+    tables:
+      - name: CUSTOMERS
+      - name: PRODUCTS
+      - name: STORES
+      - name: ORDERS
+      - name: ORDER_ITEMS
+      - name: PAYMENTS

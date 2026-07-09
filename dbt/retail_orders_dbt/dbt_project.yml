@@ -1,0 +1,21 @@
+name: retail_orders_dbt
+version: 1.0.0
+config-version: 2
+
+profile: retail_orders_dbt
+
+model-paths: ["models"]
+test-paths: ["tests"]
+macro-paths: ["macros"]
+
+models:
+  retail_orders_dbt:
+    silver:
+      +schema: silver
+      +materialized: view
+    gold:
+      +schema: gold
+      +materialized: table
+    audit:
+      +schema: audit
+      +materialized: table

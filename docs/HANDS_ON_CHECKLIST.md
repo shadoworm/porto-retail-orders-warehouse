@@ -202,6 +202,19 @@ Gold star schema:
 - Dimensions: `dim_customer`, `dim_product`, `dim_store`, `dim_date`, and `dim_payment_method`
 - Relationship tests should validate that fact foreign keys match the dimension keys.
 
+Build and test Audit models:
+
+```powershell
+dbt run --select audit
+dbt test --select audit
+```
+
+Audit evidence tables:
+
+- `audit_row_counts`: Bronze and Gold row counts.
+- `audit_revenue_reconciliation`: Bronze order item net amount vs Gold fact net amount.
+- `audit_quality_summary`: null, duplicate, and negative revenue checks.
+
 ## 5. Orchestrate with Airflow
 
 Start Airflow locally:

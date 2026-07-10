@@ -1,0 +1,27 @@
+version: 2
+
+models:
+  - name: audit_row_counts
+    columns:
+      - name: table_name
+        tests: [not_null, unique]
+      - name: row_count
+        tests: [not_null]
+
+  - name: audit_revenue_reconciliation
+    columns:
+      - name: reconciliation_status
+        tests:
+          - accepted_values:
+              arguments:
+                values: ['PASS']
+
+  - name: audit_quality_summary
+    columns:
+      - name: check_name
+        tests: [not_null, unique]
+      - name: status
+        tests:
+          - accepted_values:
+              arguments:
+                values: ['PASS']

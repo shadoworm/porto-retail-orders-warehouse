@@ -3,6 +3,7 @@ import os
 import pandas as pd
 import plotly.express as px
 import streamlit as st
+from streamlit.errors import StreamlitSecretNotFoundError
 from dotenv import load_dotenv
 import snowflake.connector
 
@@ -16,15 +17,34 @@ st.caption("Gold star schema metrics with Audit layer evidence from Snowflake.")
 load_dotenv()
 
 
+def get_config_value(key: str, default: str | None = None) -> str:
+    env_value = os.environ.get(key)
+    if env_value:
+        return env_value
+
+    try:
+        secret_value = st.secrets.get(key)
+    except StreamlitSecretNotFoundError:
+        secret_value = None
+
+    if secret_value:
+        return str(secret_value)
+
+    if default is not None:
+        return default
+
+    raise RuntimeError(f"Missing required config value: {key}")
+
+
 @st.cache_resource
 def get_connection():
     return snowflake.connector.connect(
-        account=st.secrets.get("SNOWFLAKE_ACCOUNT", None) or os.environ["SNOWFLAKE_ACCOUNT"],
-        user=st.secrets.get("SNOWFLAKE_USER", None) or os.environ["SNOWFLAKE_USER"],
-        password=st.secrets.get("SNOWFLAKE_PASSWORD", None) or os.environ["SNOWFLAKE_PASSWORD"],
-        role=st.secrets.get("SNOWFLAKE_ROLE", None) or os.environ.get("SNOWFLAKE_ROLE", "ACCOUNTADMIN"),
-        warehouse=st.secrets.get("SNOWFLAKE_WAREHOUSE", None) or os.environ.get("SNOWFLAKE_WAREHOUSE", "COMPUTE_WH"),
-        database=st.secrets.get("SNOWFLAKE_DATABASE", None) or os.environ.get("SNOWFLAKE_DATABASE", "RETAIL_ORDERS_WH"),
+        account=get_config_value("SNOWFLAKE_ACCOUNT"),
+        user=get_config_value("SNOWFLAKE_USER"),
+        password=get_config_value("SNOWFLAKE_PASSWORD"),
+        role=get_config_value("SNOWFLAKE_ROLE", "ACCOUNTADMIN"),
+        warehouse=get_config_value("SNOWFLAKE_WAREHOUSE", "COMPUTE_WH"),
+        database=get_config_value("SNOWFLAKE_DATABASE", "RETAIL_ORDERS_WH"),
     )
 
 

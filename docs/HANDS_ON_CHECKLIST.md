@@ -272,3 +272,4 @@ Dashboard queries:
 - At least 10 dbt tests pass.
 - `gold.fact_order_items` has a clear grain and valid joins to dimensions.
 - Streamlit reads from Gold tables.
+- Streamlit deployment uses a read-only Snowflake user, not `ACCOUNTADMIN`.

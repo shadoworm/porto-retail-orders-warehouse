@@ -95,3 +95,13 @@ python src\retail_orders\upload_to_s3.py `
 - dbt run and dbt test result
 - Streamlit dashboard screenshot
 - Final GitHub repository link under `shadoworm`
+
+## Deploy Dashboard
+
+Deploy the dashboard with Streamlit Community Cloud using:
+
+- Repository: `shadoworm/porto-retail-orders-warehouse`
+- Branch: `main`
+- Main file path: `streamlit_app/app.py`
+
+See [docs/STREAMLIT_DEPLOYMENT.md](docs/STREAMLIT_DEPLOYMENT.md) for Snowflake read-only user setup and secrets.

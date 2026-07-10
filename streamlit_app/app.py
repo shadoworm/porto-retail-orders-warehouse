@@ -56,6 +56,14 @@ def run_query(query: str) -> pd.DataFrame:
         return pd.DataFrame(cursor.fetchall(), columns=columns)
 
 
+def format_idr_compact(value: float) -> str:
+    if abs(value) >= 1_000_000_000:
+        return f"IDR {value / 1_000_000_000:,.1f}B"
+    if abs(value) >= 1_000_000:
+        return f"IDR {value / 1_000_000:,.1f}M"
+    return f"IDR {value:,.0f}"
+
+
 monthly_revenue = run_query(
     """
     select
@@ -135,7 +143,7 @@ fact_rows = row_counts.loc[row_counts["TABLE_NAME"] == "gold.fact_order_items", 
 reconciliation_status = reconciliation["RECONCILIATION_STATUS"].iloc[0]
 
 metric_cols = st.columns(4)
-metric_cols[0].metric("Revenue", f"IDR {total_revenue:,.0f}")
+metric_cols[0].metric("Revenue", format_idr_compact(total_revenue))
 metric_cols[1].metric("Orders", f"{total_orders:,.0f}")
 metric_cols[2].metric("Fact rows", f"{fact_rows:,.0f}")
 metric_cols[3].metric("Audit status", reconciliation_status)

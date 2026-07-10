@@ -8,7 +8,8 @@ models:
       - name: order_status
         tests:
           - accepted_values:
-              values: ['completed', 'cancelled', 'returned']
+              arguments:
+                values: ['completed', 'cancelled', 'returned']
 
   - name: stg_order_items
     columns:
@@ -16,3 +17,47 @@ models:
         tests: [not_null, unique]
       - name: net_amount
         tests: [not_null]
+
+  - name: stg_customers
+    columns:
+      - name: customer_id
+        tests: [not_null, unique]
+      - name: customer_segment
+        tests:
+          - accepted_values:
+              arguments:
+                values: ['Consumer', 'Corporate', 'Small Business']
+
+  - name: stg_products
+    columns:
+      - name: product_id
+        tests: [not_null, unique]
+      - name: list_price
+        tests: [not_null]
+
+  - name: stg_stores
+    columns:
+      - name: store_id
+        tests: [not_null, unique]
+      - name: channel
+        tests:
+          - accepted_values:
+              arguments:
+                values: ['Online', 'Retail Store', 'Marketplace']
+
+  - name: stg_payments
+    columns:
+      - name: payment_id
+        tests: [not_null, unique]
+      - name: order_id
+        tests: [not_null]
+      - name: payment_method
+        tests:
+          - accepted_values:
+              arguments:
+                values: ['credit_card', 'bank_transfer', 'ewallet', 'cash_on_delivery']
+      - name: payment_status
+        tests:
+          - accepted_values:
+              arguments:
+                values: ['paid', 'voided']

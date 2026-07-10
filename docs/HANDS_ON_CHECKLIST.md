@@ -98,13 +98,28 @@ Run the setup SQL in a Snowflake worksheet:
 -- sql/snowflake/01_create_objects.sql
 ```
 
-Create or update the S3 stage in Snowflake. Replace credentials with your AWS access method:
+Create a Snowflake storage integration for S3. Use AWS IAM Role trust policy with the Snowflake `STORAGE_AWS_IAM_USER_ARN` and `STORAGE_AWS_EXTERNAL_ID` returned by `desc integration`.
+
+```sql
+create or replace storage integration S3_RETAIL_ORDERS_INTEGRATION
+  type = external_stage
+  storage_provider = 'S3'
+  enabled = true
+  storage_aws_role_arn = 'arn:aws:iam::<AWS_ACCOUNT_ID>:role/snowflake-retail-orders-s3-role'
+  storage_allowed_locations = ('s3://alan-retail-orders-raw-743107202800-20260710/retail_orders/');
+
+desc integration S3_RETAIL_ORDERS_INTEGRATION;
+```
+
+Create the external stage:
 
 ```sql
 create or replace stage RETAIL_ORDERS_WH.BRONZE.S3_RETAIL_ORDERS_STAGE
   url = 's3://alan-retail-orders-raw-743107202800-20260710/retail_orders/'
-  credentials = (aws_key_id = '<AWS_ACCESS_KEY_ID>' aws_secret_key = '<AWS_SECRET_ACCESS_KEY>')
+  storage_integration = S3_RETAIL_ORDERS_INTEGRATION
   file_format = RETAIL_ORDERS_WH.BRONZE.CSV_WITH_HEADER;
+
+list @RETAIL_ORDERS_WH.BRONZE.S3_RETAIL_ORDERS_STAGE;
 ```
 
 Load one Bronze table first to validate the pattern:
@@ -179,6 +194,13 @@ Then build Gold and Audit:
 dbt run --select gold audit
 dbt test --select gold
 ```
+
+Gold star schema:
+
+- Fact table: `fact_order_items`
+- Grain: one row per order item
+- Dimensions: `dim_customer`, `dim_product`, `dim_store`, `dim_date`, and `dim_payment_method`
+- Relationship tests should validate that fact foreign keys match the dimension keys.
 
 ## 5. Orchestrate with Airflow
 

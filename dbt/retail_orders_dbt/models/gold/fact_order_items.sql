@@ -4,6 +4,7 @@ select
   orders.customer_id,
   item.product_id,
   orders.store_id,
+  payments.payment_method,
   to_number(to_char(orders.order_date, 'YYYYMMDD')) as date_key,
   orders.order_date,
   orders.order_status,
@@ -17,3 +18,5 @@ select
 from {{ ref('stg_order_items') }} item
 join {{ ref('stg_orders') }} orders
   on item.order_id = orders.order_id
+left join {{ ref('stg_payments') }} payments
+  on item.order_id = payments.order_id

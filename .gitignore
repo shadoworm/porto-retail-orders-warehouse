@@ -16,6 +16,7 @@ dbt/retail_orders_dbt/target/
 dbt/retail_orders_dbt/dbt_packages/
 dbt/retail_orders_dbt/logs/
 dbt/profiles.yml
+dbt/.user.yml
 
 .DS_Store
 Thumbs.db

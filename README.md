@@ -60,17 +60,23 @@ pip install -r requirements.txt
 Copy-Item .env.example .env
 ```
 
-3. Choose a runtime date.
+3. Load environment variables into the current PowerShell session.
+
+```powershell
+.\scripts\load_env.ps1
+```
+
+4. Choose a runtime date.
 
 `run_date` is a pipeline parameter, not a fixed environment setting. For manual runs, pass it through the CLI. In Airflow, use the DAG execution date with `{{ ds }}`.
 
-4. Generate local synthetic data.
+5. Generate local synthetic data.
 
 ```powershell
 python src\retail_orders\generate_synthetic_data.py --run-date 2026-07-10
 ```
 
-5. Upload raw files to S3.
+6. Upload raw files to S3.
 
 ```powershell
 python src\retail_orders\upload_to_s3.py `
@@ -79,7 +85,7 @@ python src\retail_orders\upload_to_s3.py `
   --prefix retail_orders/run_date=2026-07-10
 ```
 
-6. Follow the implementation checklist in [docs/HANDS_ON_CHECKLIST.md](docs/HANDS_ON_CHECKLIST.md).
+7. Follow the implementation checklist in [docs/HANDS_ON_CHECKLIST.md](docs/HANDS_ON_CHECKLIST.md).
 
 ## Portfolio Evidence To Capture
 

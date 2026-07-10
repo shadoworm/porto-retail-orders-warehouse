@@ -13,6 +13,8 @@ Use `run_date` as a runtime parameter:
 Set a PowerShell variable for manual work:
 
 ```powershell
+cd D:\Project\porto-retail-orders-warehouse
+.\scripts\load_env.ps1
 $RUN_DATE = "2026-07-10"
 ```
 
@@ -149,12 +151,12 @@ Copy dbt profile template:
 Copy-Item dbt\profiles.yml.example dbt\profiles.yml
 ```
 
-Set Snowflake env vars in your shell or `.env`, then test dbt connection:
+Load `.env`, then test dbt connection:
 
 ```powershell
-$env:DBT_PROFILES_DIR = "D:\Project\porto-retail-orders-warehouse\dbt"
-cd D:\Project\porto-retail-orders-warehouse\dbt\retail_orders_dbt
-dbt debug
+cd D:\Project\porto-retail-orders-warehouse
+.\scripts\load_env.ps1
+dbt debug --project-dir dbt\retail_orders_dbt --profiles-dir dbt
 ```
 
 Run models and tests:

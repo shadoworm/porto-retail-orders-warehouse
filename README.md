@@ -2,6 +2,8 @@
 
 Portfolio project for practicing a modern Data Engineering workflow using synthetic retail data, AWS S3, Snowflake, Airflow, dbt, medallion architecture, and Streamlit.
 
+Live dashboard: https://porto-retail-orders-wh.streamlit.app/
+
 This repository is intentionally built as a hands-on project. The scaffold gives the shape, naming, and guardrails. The important implementation steps are meant to be completed, tested, and documented as evidence.
 
 ## Goal
@@ -97,6 +99,10 @@ python src\retail_orders\upload_to_s3.py `
 - Final GitHub repository link under `shadoworm`
 
 ## Deploy Dashboard
+
+Live dashboard:
+
+- https://porto-retail-orders-wh.streamlit.app/
 
 Deploy the dashboard with Streamlit Community Cloud using:
 

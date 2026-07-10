@@ -262,6 +262,7 @@ Dashboard queries:
 - Business metrics come from `GOLD.fact_order_items` and Gold dimensions.
 - Quality evidence comes from `AUDIT.audit_revenue_reconciliation`, `AUDIT.audit_quality_summary`, and `AUDIT.audit_row_counts`.
 - Capture dashboard screenshot for the portfolio.
+- Live dashboard URL: https://porto-retail-orders-wh.streamlit.app/
 
 ## Acceptance criteria
 
@@ -273,3 +274,4 @@ Dashboard queries:
 - `gold.fact_order_items` has a clear grain and valid joins to dimensions.
 - Streamlit reads from Gold tables.
 - Streamlit deployment uses a read-only Snowflake user, not `ACCOUNTADMIN`.
+- Streamlit deployment is live at https://porto-retail-orders-wh.streamlit.app/.

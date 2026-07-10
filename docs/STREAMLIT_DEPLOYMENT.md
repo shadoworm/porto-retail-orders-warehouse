@@ -2,6 +2,8 @@
 
 Use Streamlit Community Cloud to publish the dashboard from this repository.
 
+Live dashboard: https://porto-retail-orders-wh.streamlit.app/
+
 ## Recommended security setup
 
 Create a read-only Snowflake role and user for the deployed dashboard. Do not use `ACCOUNTADMIN` in public deployments.
@@ -62,3 +64,9 @@ The app should show:
 - Audit evidence from `AUDIT.audit_revenue_reconciliation`, `AUDIT.audit_quality_summary`, and `AUDIT.audit_row_counts`.
 
 Use the deployed URL as the portfolio demo link after the dashboard renders successfully.
+
+Current deployed URL:
+
+```text
+https://porto-retail-orders-wh.streamlit.app/
+```

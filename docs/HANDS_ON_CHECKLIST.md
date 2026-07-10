@@ -253,14 +253,14 @@ Run the current starter app:
 
 ```powershell
 cd D:\Project\porto-retail-orders-warehouse
+.\scripts\load_env.ps1
 streamlit run streamlit_app\app.py
 ```
 
-Before using the screenshot as portfolio evidence:
+Dashboard queries:
 
-- Replace placeholder mode with Snowflake Gold queries.
-- Read from `GOLD.FACT_ORDER_ITEMS` and dimensions, not local CSV.
-- Show revenue trend, top products, sales by store, customer segment, and data quality status.
+- Business metrics come from `GOLD.fact_order_items` and Gold dimensions.
+- Quality evidence comes from `AUDIT.audit_revenue_reconciliation`, `AUDIT.audit_quality_summary`, and `AUDIT.audit_row_counts`.
 - Capture dashboard screenshot for the portfolio.
 
 ## Acceptance criteria

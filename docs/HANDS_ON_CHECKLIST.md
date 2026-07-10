@@ -125,6 +125,22 @@ file_format = RETAIL_ORDERS_WH.BRONZE.CSV_WITH_HEADER;
 
 After it works, repeat the `copy into` pattern for `customers`, `products`, `stores`, `order_items`, and `payments`.
 
+Verify Bronze row counts:
+
+```sql
+select 'CUSTOMERS' as table_name, count(*) as row_count from RETAIL_ORDERS_WH.BRONZE.CUSTOMERS
+union all
+select 'PRODUCTS', count(*) from RETAIL_ORDERS_WH.BRONZE.PRODUCTS
+union all
+select 'STORES', count(*) from RETAIL_ORDERS_WH.BRONZE.STORES
+union all
+select 'ORDERS', count(*) from RETAIL_ORDERS_WH.BRONZE.ORDERS
+union all
+select 'ORDER_ITEMS', count(*) from RETAIL_ORDERS_WH.BRONZE.ORDER_ITEMS
+union all
+select 'PAYMENTS', count(*) from RETAIL_ORDERS_WH.BRONZE.PAYMENTS;
+```
+
 ## 4. Build dbt models
 
 Copy dbt profile template:
